@@ -1,0 +1,845 @@
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>Gurukul X - EdTech Learning Platform</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:wght@400;600&display=swap');
+    body {
+      font-family: 'Poppins', 'Montserrat', sans-serif !important;
+      background-color: #000000;
+      color: #FFD700;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+      margin: 0;
+      padding: 0;
+    }
+    h1,h2,h3,h4,h5,h6 {
+      font-family: 'Montserrat', sans-serif !important;
+    }
+    /* Neon glow buttons */
+    .btn-neon {
+      border-radius: 9999px;
+      box-shadow: 0 0 8px #FFD700, 0 0 20px #FFD700;
+      transition: box-shadow 0.3s ease;
+      color: white !important;
+      background-clip: padding-box;
+      border: none;
+    }
+    .btn-neon:hover, .btn-neon:focus {
+      box-shadow: 0 0 15px #FF5733, 0 0 40px #FF5733;
+      outline: none;
+      color: white !important;
+    }
+    /* Elemental colors */
+    .fire { color: #FF5733; }
+    .water { color: #3498DB; }
+    .air { color: #E0FFFF; }
+    .earth { color: #2ECC71; }
+    /* Neon glow icons */
+    .icon-glow {
+      filter: drop-shadow(0 0 6px #FFD700);
+      transition: filter 0.3s ease;
+    }
+    .icon-glow:hover, .icon-glow:focus {
+      filter: drop-shadow(0 0 12px #FF5733);
+      outline: none;
+    }
+    /* Ripple effect */
+    .ripple {
+      position: relative;
+      overflow: hidden;
+    }
+    .ripple:after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      background: radial-gradient(circle, #FFD700 10%, transparent 10.01%);
+      background-repeat: no-repeat;
+      background-position: 50%;
+      transform: scale(10,10);
+      opacity: 0;
+      transition: transform 0.5s, opacity 1s;
+    }
+    .ripple:active:after {
+      transform: scale(0,0);
+      opacity: 0.3;
+      transition: 0s;
+    }
+    /* Accessibility font size toggle */
+    .font-size-toggle button {
+      background: transparent;
+      border: 1px solid #FFD700;
+      color: #FFD700;
+      padding: 0.25rem 0.5rem;
+      margin: 0 0.25rem;
+      border-radius: 0.375rem;
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+    .font-size-toggle button:hover,
+    .font-size-toggle button:focus {
+      background-color: #FF5733;
+      outline: none;
+    }
+    /* Scrollbar for dark theme */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #111111;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #FFD700;
+      border-radius: 10px;
+      border: 2px solid #111111;
+    }
+    /* Fade animations for splash */
+    @keyframes fadeInOut {
+      0%, 100% {opacity: 0;}
+      10%, 90% {opacity: 1;}
+    }
+    .fade-in-out {
+      animation: fadeInOut 1s ease-in-out forwards;
+    }
+    /* Micro animations for buttons */
+    .btn-glow:active {
+      box-shadow: 0 0 25px #FF5733, 0 0 50px #FF5733;
+      transition: box-shadow 0.1s ease;
+    }
+    /* Responsive adjustments */
+    @media (max-width: 640px) {
+      h1 { font-size: 2.5rem; }
+      h2 { font-size: 2rem; }
+      h3 { font-size: 1.5rem; }
+      .btn-neon {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+      }
+    }
+    /* Fix input placeholder color for better contrast */
+    input::placeholder, textarea::placeholder {
+      color: #FFD700 !important;
+      opacity: 1 !important;
+    }
+    /* Fix input text color */
+    input, textarea {
+      color: #FFFFFF !important;
+    }
+  </style>
+</head>
+<body class="relative">
+
+  <!-- Splash Screen -->
+  <section
+    id="splashScreen"
+    class="fixed inset-0 bg-black flex flex-col items-center justify-center z-50"
+    aria-label="Splash screen with animated Gurukul X logo"
+  >
+    <img
+      src="https://storage.googleapis.com/a1aa/image/9d652574-697a-4b5c-1f7e-e51c5b05f6ee.jpg"
+      alt="Animated Gurukul X logo with elemental symbols in orange and red glowing style"
+      class="w-32 h-32 mb-6 animate-pulse"
+      width="128"
+      height="128"
+      aria-hidden="true"
+    />
+    <h1 class="text-3xl font-extrabold text-yellow-400 tracking-widest fade-in-out select-none" aria-live="polite" aria-atomic="true">
+      Ignite the Elements of Learning
+    </h1>
+  </section>
+
+  <!-- Registration/Login Screen -->
+  <main
+    id="authScreen"
+    class="min-h-screen flex flex-col items-center justify-center px-6 py-12 sm:py-20 max-w-md mx-auto hidden"
+    aria-label="User registration and login screen"
+  >
+    <div class="w-full bg-gray-900 rounded-xl shadow-lg p-8 border-2 border-yellow-500">
+      <h2 class="text-4xl font-extrabold mb-6 text-yellow-400 text-center tracking-wide">
+        Welcome to Gurukul X
+      </h2>
+      <div class="flex justify-center space-x-6 mb-8">
+        <button
+          id="toggleLogin"
+          class="text-yellow-400 border-b-4 border-yellow-400 font-semibold pb-1 focus:outline-none"
+          aria-selected="true"
+          role="tab"
+          tabindex="0"
+        >
+          Login
+        </button>
+        <button
+          id="toggleRegister"
+          class="text-gray-400 hover:text-yellow-400 font-semibold pb-1 focus:outline-none"
+          aria-selected="false"
+          role="tab"
+          tabindex="-1"
+        >
+          Register
+        </button>
+      </div>
+
+      <!-- Login Form -->
+      <form
+        id="loginForm"
+        class="space-y-6"
+        aria-label="Login form"
+        role="tabpanel"
+        aria-hidden="false"
+      >
+        <div class="relative">
+          <label for="loginEmail" class="sr-only">Email or Phone</label>
+          <input
+            id="loginEmail"
+            name="loginEmail"
+            type="text"
+            placeholder="Email or Phone"
+            required
+            class="w-full rounded-md bg-black border border-yellow-500 placeholder-yellow-600 px-4 py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+            aria-describedby="loginEmailIcon"
+            style="color: white;"
+          />
+          <i
+            id="loginEmailIcon"
+            class="fas fa-envelope absolute left-3 top-3.5 text-yellow-400 pointer-events-none"
+            aria-hidden="true"
+          ></i>
+        </div>
+        <div class="relative">
+          <label for="loginPassword" class="sr-only">Password</label>
+          <input
+            id="loginPassword"
+            name="loginPassword"
+            type="password"
+            placeholder="Password"
+            required
+            minlength="6"
+            class="w-full rounded-md bg-black border border-yellow-500 placeholder-yellow-600 px-4 py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+            aria-describedby="loginPasswordIcon"
+            style="color: white;"
+          />
+          <i
+            id="loginPasswordIcon"
+            class="fas fa-lock absolute left-3 top-3.5 text-yellow-400 pointer-events-none"
+            aria-hidden="true"
+          ></i>
+        </div>
+        <button
+          type="submit"
+          class="btn-neon w-full bg-gradient-to-r from-fire to-red-600 py-3 font-semibold btn-glow"
+          aria-label="Login to Gurukul X"
+        >
+          Login
+        </button>
+        <div class="flex justify-center space-x-4 mt-4">
+          <button
+            id="googleLoginBtn"
+            type="button"
+            class="flex items-center space-x-2 border border-yellow-500 rounded-md px-4 py-2 hover:bg-yellow-500 hover:text-black transition focus:outline-none"
+            aria-label="Login with Google"
+            style="color: white;"
+          >
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
+              alt="Google logo"
+              class="w-6 h-6"
+              width="24"
+              height="24"
+              aria-hidden="true"
+            />
+            <span>Google</span>
+          </button>
+          <button
+            id="linkedinLoginBtn"
+            type="button"
+            class="flex items-center space-x-2 border border-yellow-500 rounded-md px-4 py-2 hover:bg-yellow-500 hover:text-black transition focus:outline-none"
+            aria-label="Login with LinkedIn"
+            style="color: white;"
+          >
+            <i class="fab fa-linkedin fa-lg" aria-hidden="true"></i>
+            <span>LinkedIn</span>
+          </button>
+        </div>
+      </form>
+
+      <!-- Registration Form -->
+      <form
+        id="registerForm"
+        class="space-y-6 hidden"
+        aria-label="Registration form"
+        role="tabpanel"
+        aria-hidden="true"
+      >
+        <div class="relative">
+          <label for="registerName" class="sr-only">Full Name</label>
+          <input
+            id="registerName"
+            name="registerName"
+            type="text"
+            placeholder="Full Name"
+            required
+            class="w-full rounded-md bg-black border border-yellow-500 placeholder-yellow-600 px-4 py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+            aria-describedby="registerNameIcon"
+            style="color: white;"
+          />
+          <i
+            id="registerNameIcon"
+            class="fas fa-user absolute left-3 top-3.5 text-yellow-400 pointer-events-none"
+            aria-hidden="true"
+          ></i>
+        </div>
+        <div class="relative">
+          <label for="registerEmail" class="sr-only">Email</label>
+          <input
+            id="registerEmail"
+            name="registerEmail"
+            type="email"
+            placeholder="Email"
+            required
+            class="w-full rounded-md bg-black border border-yellow-500 placeholder-yellow-600 px-4 py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+            aria-describedby="registerEmailIcon"
+            style="color: white;"
+          />
+          <i
+            id="registerEmailIcon"
+            class="fas fa-envelope absolute left-3 top-3.5 text-yellow-400 pointer-events-none"
+            aria-hidden="true"
+          ></i>
+        </div>
+        <div class="relative">
+          <label for="registerPhone" class="sr-only">Phone</label>
+          <input
+            id="registerPhone"
+            name="registerPhone"
+            type="tel"
+            placeholder="Phone Number"
+            pattern="[0-9]{10,15}"
+            class="w-full rounded-md bg-black border border-yellow-500 placeholder-yellow-600 px-4 py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+            aria-describedby="registerPhoneIcon"
+            style="color: white;"
+          />
+          <i
+            id="registerPhoneIcon"
+            class="fas fa-phone-alt absolute left-3 top-3.5 text-yellow-400 pointer-events-none"
+            aria-hidden="true"
+          ></i>
+        </div>
+        <div class="relative">
+          <label for="registerPassword" class="sr-only">Password</label>
+          <input
+            id="registerPassword"
+            name="registerPassword"
+            type="password"
+            placeholder="Password"
+            required
+            minlength="6"
+            class="w-full rounded-md bg-black border border-yellow-500 placeholder-yellow-600 px-4 py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+            aria-describedby="registerPasswordIcon"
+            style="color: white;"
+          />
+          <i
+            id="registerPasswordIcon"
+            class="fas fa-lock absolute left-3 top-3.5 text-yellow-400 pointer-events-none"
+            aria-hidden="true"
+          ></i>
+        </div>
+        <button
+          type="submit"
+          class="btn-neon w-full bg-gradient-to-r from-fire to-red-600 py-3 font-semibold btn-glow"
+          aria-label="Register for Gurukul X"
+        >
+          Register
+        </button>
+        <div class="flex justify-center space-x-4 mt-4">
+          <button
+            id="googleSignupBtn"
+            type="button"
+            class="flex items-center space-x-2 border border-yellow-500 rounded-md px-4 py-2 hover:bg-yellow-500 hover:text-black transition focus:outline-none"
+            aria-label="Sign up with Google"
+            style="color: white;"
+          >
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
+              alt="Google logo"
+              class="w-6 h-6"
+              width="24"
+              height="24"
+              aria-hidden="true"
+            />
+            <span>Google</span>
+          </button>
+          <button
+            id="linkedinSignupBtn"
+            type="button"
+            class="flex items-center space-x-2 border border-yellow-500 rounded-md px-4 py-2 hover:bg-yellow-500 hover:text-black transition focus:outline-none"
+            aria-label="Sign up with LinkedIn"
+            style="color: white;"
+          >
+            <i class="fab fa-linkedin fa-lg" aria-hidden="true"></i>
+            <span>LinkedIn</span>
+          </button>
+        </div>
+      </form>
+
+      <!-- Language Toggle -->
+      <div
+        class="mt-8 flex justify-center space-x-6 font-semibold text-yellow-400"
+        role="radiogroup"
+        aria-label="Language selection"
+      >
+        <button
+          id="langEnglish"
+          class="focus:outline-none border-b-4 border-yellow-400 pb-1"
+          role="radio"
+          aria-checked="true"
+          tabindex="0"
+          aria-label="English language"
+        >
+          🇬🇧 English
+        </button>
+        <button
+          id="langHindi"
+          class="text-yellow-600 hover:text-yellow-400 focus:outline-none"
+          role="radio"
+          aria-checked="false"
+          tabindex="-1"
+          aria-label="Hindi language"
+        >
+          🇮🇳 हिंदी
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Splash screen fade out after 1 second (reduced delay)
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        const splash = document.getElementById("splashScreen");
+        splash.style.transition = "opacity 0.6s ease";
+        splash.style.opacity = "0";
+        setTimeout(() => {
+          splash.style.display = "none";
+          document.getElementById("authScreen").classList.remove("hidden");
+        }, 600);
+      }, 1000); // Reduced from 2000ms to 1000ms
+    });
+
+    // Toggle between login and register forms
+    const toggleLoginBtn = document.getElementById("toggleLogin");
+    const toggleRegisterBtn = document.getElementById("toggleRegister");
+    const loginForm = document.getElementById("loginForm");
+    const registerForm = document.getElementById("registerForm");
+
+    toggleLoginBtn.addEventListener("click", () => {
+      toggleLoginBtn.classList.add("border-yellow-400", "text-yellow-400");
+      toggleLoginBtn.setAttribute("aria-selected", "true");
+      toggleLoginBtn.tabIndex = 0;
+      toggleRegisterBtn.classList.remove("border-yellow-400", "text-yellow-400");
+      toggleRegisterBtn.setAttribute("aria-selected", "false");
+      toggleRegisterBtn.tabIndex = -1;
+      loginForm.classList.remove("hidden");
+      loginForm.setAttribute("aria-hidden", "false");
+      registerForm.classList.add("hidden");
+      registerForm.setAttribute("aria-hidden", "true");
+    });
+
+    toggleRegisterBtn.addEventListener("click", () => {
+      toggleRegisterBtn.classList.add("border-yellow-400", "text-yellow-400");
+      toggleRegisterBtn.setAttribute("aria-selected", "true");
+      toggleRegisterBtn.tabIndex = 0;
+      toggleLoginBtn.classList.remove("border-yellow-400", "text-yellow-400");
+      toggleLoginBtn.setAttribute("aria-selected", "false");
+      toggleLoginBtn.tabIndex = -1;
+      registerForm.classList.remove("hidden");
+      registerForm.setAttribute("aria-hidden", "false");
+      loginForm.classList.add("hidden");
+      loginForm.setAttribute("aria-hidden", "true");
+    });
+
+    // Language toggle
+    const langEnglishBtn = document.getElementById("langEnglish");
+    const langHindiBtn = document.getElementById("langHindi");
+
+    function setLanguage(lang) {
+      if (lang === "en") {
+        langEnglishBtn.classList.add("border-b-4", "border-yellow-400", "pb-1");
+        langEnglishBtn.setAttribute("aria-checked", "true");
+        langEnglishBtn.tabIndex = 0;
+        langHindiBtn.classList.remove("border-b-4", "border-yellow-400", "pb-1");
+        langHindiBtn.setAttribute("aria-checked", "false");
+        langHindiBtn.tabIndex = -1;
+        // For demo: just alert language change
+        alert("Language set to English");
+      } else {
+        langHindiBtn.classList.add("border-b-4", "border-yellow-400", "pb-1");
+        langHindiBtn.setAttribute("aria-checked", "true");
+        langHindiBtn.tabIndex = 0;
+        langEnglishBtn.classList.remove("border-b-4", "border-yellow-400", "pb-1");
+        langEnglishBtn.setAttribute("aria-checked", "false");
+        langEnglishBtn.tabIndex = -1;
+        alert("भाषा हिंदी में सेट की गई");
+      }
+    }
+    langEnglishBtn.addEventListener("click", () => setLanguage("en"));
+    langHindiBtn.addEventListener("click", () => setLanguage("hi"));
+
+    // Authentication simulation with localStorage
+    const signupForm = document.getElementById("registerForm");
+    const loginFormEl = document.getElementById("loginForm");
+
+    signupForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = signupForm.registerName.value.trim();
+      const email = signupForm.registerEmail.value.trim().toLowerCase();
+      const phone = signupForm.registerPhone.value.trim();
+      const password = signupForm.registerPassword.value;
+
+      if (!name || !email || !password) {
+        alert("Please fill all required fields.");
+        return;
+      }
+      if (password.length < 6) {
+        alert("Password must be at least 6 characters.");
+        return;
+      }
+      const users = JSON.parse(localStorage.getItem("gurukulx_users") || "[]");
+      if (users.find((u) => u.email === email)) {
+        alert("Email already registered. Please login.");
+        toggleLoginBtn.click();
+        return;
+      }
+      users.push({ name, email, phone, password });
+      localStorage.setItem("gurukulx_users", JSON.stringify(users));
+      alert("Account created successfully! Please login.");
+      signupForm.reset();
+      toggleLoginBtn.click();
+    });
+
+    loginFormEl.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = loginFormEl.loginEmail.value.trim().toLowerCase();
+      const password = loginFormEl.loginPassword.value;
+
+      if (!email || !password) {
+        alert("Please fill all fields.");
+        return;
+      }
+      const users = JSON.parse(localStorage.getItem("gurukulx_users") || "[]");
+      const user = users.find((u) => u.email === email && u.password === password);
+      if (!user) {
+        alert("Invalid email or password.");
+        return;
+      }
+      localStorage.setItem("gurukulx_logged_in_user", JSON.stringify(user));
+      alert(`Welcome back, ${user.name}!`);
+      loginFormEl.reset();
+      hideModals();
+      updateUIForLoggedInUser(user);
+    });
+
+    function updateUIForLoggedInUser(user) {
+      // Hide auth screen, show home screen
+      document.getElementById("authScreen").classList.add("hidden");
+      document.getElementById("homeScreen").classList.remove("hidden");
+      // Update welcome message
+      const welcomeMessage = document.getElementById("welcomeMessage");
+      if (welcomeMessage) welcomeMessage.textContent = `Welcome, ${user.name}!`;
+
+      // Add user info and logout button to header
+      const header = document.querySelector("header > div.container");
+      let userInfoDiv = document.getElementById("userInfoDiv");
+      if (userInfoDiv) userInfoDiv.remove();
+
+      userInfoDiv = document.createElement("div");
+      userInfoDiv.id = "userInfoDiv";
+      userInfoDiv.className =
+        "flex items-center space-x-4 text-yellow-400 font-semibold tracking-wide select-none";
+
+      const welcomeSpan = document.createElement("span");
+      welcomeSpan.textContent = user.name;
+
+      const logoutBtnHeader = document.createElement("button");
+      logoutBtnHeader.textContent = "Logout";
+      logoutBtnHeader.className =
+        "px-4 py-2 border border-red-600 text-red-600 rounded-md hover:bg-red-600 hover:text-black transition duration-300 font-semibold tracking-wide";
+      logoutBtnHeader.addEventListener("click", () => {
+        alert("You have been logged out.");
+        localStorage.removeItem("gurukulx_logged_in_user");
+        userInfoDiv.remove();
+        showAuthButtons();
+        document.getElementById("homeScreen").classList.add("hidden");
+        document.getElementById("authScreen").classList.remove("hidden");
+      });
+
+      userInfoDiv.appendChild(welcomeSpan);
+      userInfoDiv.appendChild(logoutBtnHeader);
+
+      hideAuthButtons();
+      header.appendChild(userInfoDiv);
+    }
+
+    function hideModals() {
+      document.getElementById("authModal")?.classList.add("hidden");
+      document.getElementById("signupModal")?.classList.add("hidden");
+    }
+
+    function showAuthButtons() {
+      document.getElementById("loginBtn").classList.remove("hidden");
+      document.getElementById("signupBtn").classList.remove("hidden");
+      document.getElementById("mobileLoginBtn").classList.remove("hidden");
+      document.getElementById("mobileSignupBtn").classList.remove("hidden");
+    }
+
+    function hideAuthButtons() {
+      document.getElementById("loginBtn").classList.add("hidden");
+      document.getElementById("signupBtn").classList.add("hidden");
+      document.getElementById("mobileLoginBtn").classList.add("hidden");
+      document.getElementById("mobileSignupBtn").classList.add("hidden");
+    }
+
+    // Google and LinkedIn OAuth simulation
+    function simulateOAuth(isSignup, provider) {
+      setTimeout(() => {
+        const googleUser = {
+          name: "Google User",
+          email: "googleuser@example.com",
+          password: "google_oauth_dummy_password",
+        };
+        const linkedinUser = {
+          name: "LinkedIn User",
+          email: "linkedinuser@example.com",
+          password: "linkedin_oauth_dummy_password",
+        };
+        const userData = provider === "google" ? googleUser : linkedinUser;
+        const users = JSON.parse(localStorage.getItem("gurukulx_users") || "[]");
+        const existingUser = users.find((u) => u.email === userData.email);
+
+        if (isSignup) {
+          if (existingUser) {
+            alert(`${provider.charAt(0).toUpperCase() + provider.slice(1)} account already registered. Please login.`);
+            toggleLoginBtn.click();
+            return;
+          }
+          users.push(userData);
+          localStorage.setItem("gurukulx_users", JSON.stringify(users));
+          alert(`Account created successfully with ${provider.charAt(0).toUpperCase() + provider.slice(1)}! You are now logged in.`);
+          localStorage.setItem("gurukulx_logged_in_user", JSON.stringify(userData));
+          hideModals();
+          updateUIForLoggedInUser(userData);
+        } else {
+          if (!existingUser) {
+            alert(`${provider.charAt(0).toUpperCase() + provider.slice(1)} account not registered. Please sign up first.`);
+            toggleRegisterBtn.click();
+            return;
+          }
+          alert(`Welcome back, ${existingUser.name}! Logged in with ${provider.charAt(0).toUpperCase() + provider.slice(1)}.`);
+          localStorage.setItem("gurukulx_logged_in_user", JSON.stringify(existingUser));
+          hideModals();
+          updateUIForLoggedInUser(existingUser);
+        }
+      }, 1000);
+    }
+
+    document.getElementById("googleLoginBtn").addEventListener("click", () => simulateOAuth(false, "google"));
+    document.getElementById("googleSignupBtn").addEventListener("click", () => simulateOAuth(true, "google"));
+    document.getElementById("linkedinLoginBtn").addEventListener("click", () => simulateOAuth(false, "linkedin"));
+    document.getElementById("linkedinSignupBtn").addEventListener("click", () => simulateOAuth(true, "linkedin"));
+  </script>
+
+  <!-- Home Screen placeholder for demonstration -->
+  <main
+    id="homeScreen"
+    class="min-h-screen px-6 py-8 max-w-4xl mx-auto hidden"
+    aria-label="Home screen"
+  >
+    <header class="flex items-center justify-between mb-8">
+      <h2 class="text-3xl font-extrabold text-yellow-400 tracking-wide" id="welcomeMessage" tabindex="0">
+        Welcome, Learner!
+      </h2>
+      <button
+        id="profileBtn"
+        aria-label="User profile"
+        class="w-12 h-12 rounded-full border-2 border-yellow-500 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-yellow-400"
+      >
+        <i class="fas fa-user text-yellow-400 text-xl" aria-hidden="true"></i>
+      </button>
+    </header>
+    <div class="flex flex-col sm:flex-row sm:space-x-6 mb-10">
+      <button
+        id="startLearningBtn"
+        class="btn-neon flex-1 bg-gradient-to-r from-fire to-red-600 py-4 font-semibold text-black btn-glow mb-4 sm:mb-0"
+        aria-label="Start Learning"
+      >
+        📚 Start Learning
+      </button>
+      <button
+        id="contactSupportBtn"
+        class="btn-neon flex-1 border-2 border-yellow-500 text-yellow-400 py-4 font-semibold rounded-full hover:bg-yellow-500 hover:text-black transition btn-glow"
+        aria-label="Contact Support"
+      >
+        📞 Contact Support
+      </button>
+    </div>
+    <section aria-label="Featured courses" tabindex="0">
+      <h3 class="text-2xl font-extrabold mb-6 gradient-text">Featured Courses</h3>
+      <div
+        id="featuredCourses"
+        class="flex space-x-6 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-yellow-400 scrollbar-track-gray-900"
+      >
+        <!-- Fire: Coding -->
+        <article
+          class="min-w-[280px] bg-gray-900 rounded-xl p-6 border-2 border-fire card-techy flex-shrink-0"
+          tabindex="0"
+          aria-label="Coding course with fire elemental icon"
+        >
+          <div class="flex items-center space-x-3 mb-4">
+            <svg
+              class="w-8 h-8 fire icon-glow"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 2C8 7 7 11 7 14a5 5 0 0010 0c0-3-1-7-5-12z"
+              />
+            </svg>
+            <h4 class="text-xl font-semibold fire">Coding (Fire)</h4>
+          </div>
+          <p class="text-yellow-300 font-mono mb-4">
+            Master programming languages and build powerful applications.
+          </p>
+          <button
+            class="btn-neon bg-fire text-black w-full py-2 rounded btn-glow"
+            aria-label="Explore Coding courses"
+          >
+            Explore
+          </button>
+        </article>
+
+        <!-- Water: Soft Skills -->
+        <article
+          class="min-w-[280px] bg-gray-900 rounded-xl p-6 border-2 border-water card-techy flex-shrink-0"
+          tabindex="0"
+          aria-label="Soft skills course with water elemental icon"
+        >
+          <div class="flex items-center space-x-3 mb-4">
+            <svg
+              class="w-8 h-8 water icon-glow"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 22s8-4 8-10a8 8 0 10-16 0c0 6 8 10 8 10z"
+              />
+            </svg>
+            <h4 class="text-xl font-semibold water">Soft Skills (Water)</h4>
+          </div>
+          <p class="text-yellow-300 font-mono mb-4">
+            Enhance communication, teamwork, and leadership skills.
+          </p>
+          <button
+            class="btn-neon bg-water text-black w-full py-2 rounded btn-glow"
+            aria-label="Explore Soft Skills courses"
+          >
+            Explore
+          </button>
+        </article>
+
+        <!-- Air: Communication -->
+        <article
+          class="min-w-[280px] bg-gray-900 rounded-xl p-6 border-2 border-air card-techy flex-shrink-0"
+          tabindex="0"
+          aria-label="Communication course with air elemental icon"
+        >
+          <div class="flex items-center space-x-3 mb-4">
+            <svg
+              class="w-8 h-8 air icon-glow"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3 10h18M3 14h18M3 6h18M3 18h18"
+              />
+            </svg>
+            <h4 class="text-xl font-semibold air">Communication (Air)</h4>
+          </div>
+          <p class="text-yellow-300 font-mono mb-4">
+            Improve public speaking, writing, and interpersonal communication.
+          </p>
+          <button
+            class="btn-neon bg-air text-black w-full py-2 rounded btn-glow"
+            aria-label="Explore Communication courses"
+          >
+            Explore
+          </button>
+        </article>
+
+        <!-- Earth: Finance -->
+        <article
+          class="min-w-[280px] bg-gray-900 rounded-xl p-6 border-2 border-earth card-techy flex-shrink-0"
+          tabindex="0"
+          aria-label="Finance course with earth elemental icon"
+        >
+          <div class="flex items-center space-x-3 mb-4">
+            <svg
+              class="w-8 h-8 earth icon-glow"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 6v6l4 2" />
+            </svg>
+            <h4 class="text-xl font-semibold earth">Finance (Earth)</h4>
+          </div>
+          <p class="text-yellow-300 font-mono mb-4">
+            Learn personal finance, investing, and money management.
+          </p>
+          <button
+            class="btn-neon bg-earth text-black w-full py-2 rounded btn-glow"
+            aria-label="Explore Finance courses"
+          >
+            Explore
+          </button>
+        </article>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>
